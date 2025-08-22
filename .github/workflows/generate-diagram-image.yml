@@ -29,7 +29,9 @@ jobs:
           pattern: ${{steps.getfile.outputs.files}}
 
       - name: Push Local Changes
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v6
         with:
           commit_message: "chore: render PlantUML diagrams"
           branch: ${{ github.head_ref }}
+
+
