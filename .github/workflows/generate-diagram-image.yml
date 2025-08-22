@@ -8,10 +8,7 @@ on:
       - main
     
 jobs:
-
   permissions:
-      # Give the default GITHUB_TOKEN write permission to commit and push the
-      # added or changed files to the repository.
     contents: write
 
   generate_plantuml:
@@ -39,3 +36,5 @@ jobs:
         with:
           commit_message: "chore: render PlantUML diagrams"
           branch: ${{ github.head_ref }}
+
+
