@@ -1,0 +1,35 @@
+# Github action to generate diagrams here: https://github.com/marketplace/actions/plantuml-github-action
+
+name: Generate PlantUML diagram image
+on:
+  push:
+    paths: ["**.puml"]
+    branches-ignore:
+      - main
+    
+jobs:
+  generate_plantuml:
+    runs-on: ubuntu-22.04
+    name: Run image generator
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed UML files
+        id: getfile
+        run: |
+          echo "::set-output name=files::$(git diff --name-only HEAD^ HEAD | grep .puml | xargs)"
+
+      - name: Generate SVG Diagrams
+        uses: rotaract/plantuml-action@v1
+        with:
+          format: svg
+          pattern: ${{steps.getfile.outputs.files}}
+
+      - name: Push Local Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: render PlantUML diagrams"
+          branch: ${{ github.head_ref }}
