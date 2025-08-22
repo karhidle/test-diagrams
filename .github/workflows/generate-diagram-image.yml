@@ -8,9 +8,6 @@ on:
       - main
     
 jobs:
-  permissions:
-    contents: write
-
   generate_plantuml:
     runs-on: ubuntu-22.04
     name: Run image generator
